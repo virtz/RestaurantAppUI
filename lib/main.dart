@@ -28,8 +28,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var width;
+  var height;
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -89,7 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                _buildListItem('images/plate3.jpg', 'African Yam Stock', '\$28'),
+                _buildListItem(
+                    'images/plate3.jpg', 'African Yam Stock', '\$28'),
                 _buildListItem('images/plate4.jpg', 'Jollof Rice', '\$30'),
               ],
             ),
@@ -105,42 +110,64 @@ class _MyHomePageState extends State<MyHomePage> {
                       fontWeight: FontWeight.w600,
                       fontSize: 17.0))),
           SizedBox(
-            height: 20.0,
+            height: 10.0,
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Container(
-              height: 250.0,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.white, Color(0xFFACBEA3)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(15.0),
-                  image:
-                      DecorationImage(image: AssetImage('images/plate2.jpg'),
-                      fit: BoxFit.cover
-                      )),
-            ),
+          // Padding(
+          //   padding: EdgeInsets.only(left: 20, right: 20),
+          //   child: Container(
+          //     height: 250.0,
+          //     decoration: BoxDecoration(
+          //         gradient: LinearGradient(
+          //           colors: [Colors.white, Color(0xFFACBEA3)],
+          //           begin: Alignment.topLeft,
+          //           end: Alignment.bottomRight,
+          //         ),
+          //         borderRadius: BorderRadius.circular(15.0),
+          //         image:
+          //             DecorationImage(image: AssetImage('images/plate2.jpg'),
+          //             fit: BoxFit.cover
+          //             )),
+          //   ),
+          // )
+          ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              buildList2('images/chicken.jpg', 'Grilled Meat', '\$30'),
+              buildList2('images/chicken1.jpg', 'Fried Chicken', '\$30'),
+            ],
           )
         ],
       ),
       bottomNavigationBar: Container(
-        height:70.0,
+        height: 70.0,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft:Radius.circular(50.0),
-          topRight: Radius.circular(50.0)),
-          color: Color(0xFF5AC035)
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50.0),
+                topRight: Radius.circular(50.0)),
+            color: Color(0xFF5AC035)),
+        padding: EdgeInsets.only(left: 40, right: 40),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Icon(
+              Icons.bookmark_border,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.shopping_basket,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.person_outline,
+              color: Colors.white,
+            ),
+          ],
         ),
-        padding: EdgeInsets.only(left:40,right:40),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Icon(Icons.bookmark_border,color: Colors.white,),
-          Icon(Icons.search,color: Colors.white,),
-          Icon(Icons.shopping_basket,color: Colors.white,),
-          Icon(Icons.person_outline,color: Colors.white,),
-        ],),
       ),
     );
   }
@@ -148,15 +175,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildListItem(String imgPath, String foodName, String price) {
     return InkWell(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context){
-           return DetailsPage(heroTag: imgPath,foodName: foodName,foodPrice:price);
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return DetailsPage(
+                heroTag: imgPath, foodName: foodName, foodPrice: price);
           }));
         },
         child: Padding(
           padding: EdgeInsets.only(left: 20.0, top: 10, bottom: 10.0),
           child: Container(
-            height: 200.0,
-            width: 200.0,
+            height: 200,
+            width: (MediaQuery.of(context).size.width) / 2 + 15,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
@@ -185,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 175.0,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(imgPath), fit: BoxFit.cover),
+                            image: AssetImage(imgPath), fit: BoxFit.fill),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10.0),
                             topRight: Radius.circular(10.0))),
@@ -236,6 +264,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                         fontFamily: 'Montserrat',
                                         color: Colors.grey,
                                         fontSize: 12.0)),
+                                SizedBox(
+                                    width: (MediaQuery.of(context).size.width) /
+                                        50),
                                 Icon(Icons.star,
                                     color: Colors.green, size: 14.0),
                                 Icon(Icons.star,
@@ -263,5 +294,73 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ));
+  }
+
+  Widget buildList2(String imgPath, String foodName, String price) {
+    return Padding(
+        padding: const EdgeInsets.only(left: 23.0, right: 24.0,top:10.0),
+        child: InkWell(
+            child: Container(
+          //color: Colors.grey,
+          height: 70.0,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                child: Card(
+                  elevation: 5.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SizedBox(
+                        width: width / 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left:8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(foodName,
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 17.5,
+                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic)),
+                            Text('Bryce Walker',
+                                style: TextStyle(fontSize: 13.0))
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Icon(Icons.favorite, color: Colors.red),
+                          Text('4.5'),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 248.0),
+                child: Container(
+                  height: 90.0,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                         image: AssetImage(imgPath), fit: BoxFit.fill),
+                    
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.elliptical(50, 40)
+                      )
+                      ),
+                ),
+              ),
+            ],
+          ),
+          
+        )));
   }
 }

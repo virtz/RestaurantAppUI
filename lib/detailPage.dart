@@ -40,7 +40,12 @@ class _DetailsPageState extends State<DetailsPage> {
                     width: 250.0,
                     decoration: BoxDecoration(
                         image:
-                            DecorationImage(image: AssetImage(widget.heroTag))),
+                            DecorationImage(image: AssetImage(widget.heroTag),),
+                        //       borderRadius: BorderRadius.only(
+                        // bottomLeft: Radius.circular(100.0),
+                        // bottomRight: Radius.circular(100.0))),
+                       // borderRadius: BorderRadius.circular(100.0)
+                    )
                   ),
                 ),
               ),
